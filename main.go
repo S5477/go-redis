@@ -18,8 +18,10 @@ func serveApplication() {
 	router := gin.Default()
 
 	publicRoutes := router.Group("/")
-	publicRoutes.GET("/add", controller.Add)
+	publicRoutes.POST("/add", controller.Add)
 	publicRoutes.GET("/get", controller.Get)
+	publicRoutes.POST("/hadd", controller.HAdd)
+	publicRoutes.GET("/hget", controller.HGet)
 
 	router.Run(PORT)
 	fmt.Println("Server running on port" + PORT)
