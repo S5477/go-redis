@@ -20,6 +20,8 @@ func serveApplication() {
 	publicRoutes := router.Group("/")
 	publicRoutes.GET("/add", controller.Add)
 	publicRoutes.GET("/get", controller.Get)
+	publicRoutes.GET("/hadd", controller.HAdd)
+	publicRoutes.GET("/hget", controller.HGet)
 
 	router.Run(PORT)
 	fmt.Println("Server running on port" + PORT)

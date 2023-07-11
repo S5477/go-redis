@@ -43,6 +43,14 @@ func Get(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{"data": res})
 }
 
+func HAdd(context *gin.Context) {
+
+}
+
+func HGet(context *gin.Context) {
+
+}
+
 func getParam(context *gin.Context, param string) string {
 	param, issetVal := context.GetQuery(param)
 
