@@ -22,5 +22,5 @@ func serveApplication() {
 	publicRoutes.GET("/get", controller.Get)
 
 	router.Run(PORT)
-	fmt.Println("Server running on port 8000")
+	fmt.Println("Server running on port" + PORT)
 }
