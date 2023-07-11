@@ -1,5 +1,5 @@
 package validation
 
 type GetRequested struct {
-	Key string `json:"key" binding:"required"`
+	Key string `json:"key" binding:"required,min=3"`
 }
