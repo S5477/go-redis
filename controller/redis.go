@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/S5477/go-redis/store"
+	"github.com/S5477/go-redis/validation"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,6 +12,13 @@ const VALUE = "value"
 const KEY = "key"
 
 func Add(context *gin.Context) {
+	var v validation.AddRequested
+
+	if err := context.ShouldBind(&v); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	value := getParam(context, VALUE)
 
 	key := getParam(context, KEY)
@@ -21,6 +29,13 @@ func Add(context *gin.Context) {
 }
 
 func Get(context *gin.Context) {
+	var v validation.GetRequested
+
+	if err := context.ShouldBind(&v); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	key := getParam(context, KEY)
 
 	res := store.GetString(key)
