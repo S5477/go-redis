@@ -3,35 +3,31 @@ package controller
 import (
 	"net/http"
 
+	"github.com/S5477/go-redis/models"
 	"github.com/S5477/go-redis/store"
-	"github.com/S5477/go-redis/validation"
+
 	"github.com/gin-gonic/gin"
 )
 
-const VALUE = "value"
 const KEY = "key"
 
 func Add(context *gin.Context) {
-	var v validation.AddRequested
+	var v models.Add
 
-	if err := context.ShouldBind(&v); err != nil {
+	if err := context.ShouldBindJSON(&v); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	value := getParam(context, VALUE)
-
-	key := getParam(context, KEY)
-
-	store.SetString(key, value)
+	store.SetString(v)
 
 	context.JSON(http.StatusOK, gin.H{"data": "ok"})
 }
 
 func Get(context *gin.Context) {
-	var v validation.GetRequested
+	var v models.Get
 
-	if err := context.ShouldBind(&v); err != nil {
+	if err := context.ShouldBindQuery(&v); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -52,11 +48,9 @@ func HGet(context *gin.Context) {
 }
 
 func getParam(context *gin.Context, param string) string {
-	param, issetVal := context.GetQuery(param)
+	var s models.Get
 
-	if !issetVal {
-		panic("no " + param)
-	}
+	context.ShouldBindQuery(&s)
 
-	return param
+	return s.Key
 }

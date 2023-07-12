@@ -3,9 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/S5477/go-redis/controller"
-
-	"github.com/gin-gonic/gin"
+	"github.com/S5477/go-redis/route"
 )
 
 const PORT = ":8000"
@@ -15,7 +13,7 @@ func main() {
 }
 
 func serveApplication() {
-	router := gin.Default()
+	router := route.Route()
 
 	publicRoutes := router.Group("/")
 	publicRoutes.POST("/add", controller.Add)
