@@ -14,7 +14,6 @@ func main() {
 
 func serveApplication() {
 	router := route.Route()
-
 	router.Run(PORT)
 	fmt.Println("Server running on port" + PORT)
 }
