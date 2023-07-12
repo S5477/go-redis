@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 
+	"github.com/S5477/go-redis/models"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -15,20 +16,17 @@ var rbase = redis.NewClient(&redis.Options{
 	DB:       0,
 })
 
-func SetString(key string, value string) {
+func SetString(s models.Add) {
 
-	err := rbase.Set(ctx, key, value, 0).Err()
+	println("start", s.Key, s.Value)
+	err := rbase.Set(ctx, s.Key, s.Value, 0).Err()
 	if err != nil {
 		panic(err)
 	}
 }
 
 func GetString(key string) string {
-
-	val, err := rbase.Get(ctx, key).Result()
-	if err != nil {
-		panic(err)
-	}
+	val, _ := rbase.Get(ctx, key).Result()
 
 	return val
 }
